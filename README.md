@@ -6,13 +6,14 @@ Agenda semanal e diária, simples e minimalista, para organizar rotina, compromi
 
 ## Funcionalidades
 
-- **Hoje** — agenda do dia, tarefas sem horário, progresso, “próximo compromisso” e distribuição do tempo por área. Adição rápida em linguagem natural: `14:30 dentista`, `reunião 9h-10h`, `comprar pão`.
-- **Semana** — visão dos 7 dias com compromissos fixos e pontuais, e horas planejadas por área.
-- **Compromissos fixos semanais** — repetem nos dias escolhidos; dá para marcar como feito por dia ou pular apenas uma data.
-- **Lembretes** — notificações do navegador/celular com antecedência configurável (por item ou padrão). Exportação `.ics` para Google Agenda / Apple Calendário, com alarmes que funcionam mesmo com o app fechado.
-- **Planejar (✦)** — questionário curto (horários, trabalho, período de mais energia, horas de estudo, exercício, tempo com a família, metas pessoais) que gera uma rotina semanal equilibrada, com avisos e dicas. Pode ser refeito a qualquer momento sem apagar seus itens manuais.
-- **Tudo personalizável** — categorias (nome e cor), tema claro/escuro, início da semana, lembrete padrão, horário ativo do dia.
-- **Funciona offline** e pode ser instalado na tela inicial (PWA). Backup/restauração em JSON.
+- **Início (painel)** — o bloco de **agora** com progresso e detalhes, o próximo bloco, contagem regressiva para dormir, progresso do dia, faixa da semana e horas por área.
+- **Rotina** — rotina semanal no estilo “períodos do dia” (🌅 Manhã, 🏢 Tarde, 🏋️ Noite…), com blocos de horário, etiqueta (ex: `1h15 brutos ➔ 1h líquida`) e detalhes em tópicos. Edite por dia, copie um dia para outros, exporte em texto.
+- **Importar texto / modelo** — cole uma rotina em texto (`06:15 às 07:30 – Bloco de Estudos 1`, com `•` para detalhes e títulos com emoji para os períodos) e ela vira blocos. Inclui o modelo pronto *Foco, Família e Trabalho*.
+- **Sono em ciclos de 90 min** — escolha fixar a hora de acordar **ou** de dormir, quantos ciclos (3–6) e o tempo para adormecer; o app calcula o outro horário e ajusta automaticamente os blocos “Acordar” e “Dormir” da rotina.
+- **Agenda** — compromissos detalhados (data, horário, local, detalhes, lembrete) nas visões Dia, Semana e Mês. Adição rápida: `14:30 dentista`.
+- **Lembretes** — notificações com antecedência configurável e exportação `.ics` para Google Agenda / Calendário do celular.
+- **Assistente ✦** — questionário que sugere uma rotina equilibrada a partir de metas.
+- **Tudo personalizável** — períodos (emoji, nome, subtítulo, horário), categorias, tema claro/escuro, início da semana. Funciona offline, instalável (PWA), com backup em JSON.
 
 Os dados ficam salvos apenas no seu dispositivo (localStorage).
 
@@ -36,6 +37,8 @@ O workflow copia os arquivos do app para a branch `gh-pages`, que é servida pel
 index.html            # casca do app
 css/style.css         # estilos (tema claro/escuro)
 js/app.js             # interface e telas
+js/sleep.js           # calculadora de ciclos de sono
+js/routine-text.js    # importar/exportar rotina em texto + modelo
 js/store.js           # dados e datas
 js/notifications.js   # lembretes
 js/planner.js         # planejador inteligente

@@ -23,6 +23,12 @@ export const DEFAULT_CATEGORIES = [
   { id: 'lazer', name: 'Lazer', color: '#c9a227' },
 ];
 
+export const DEFAULT_PERIODS = [
+  { id: 'p-manha', emoji: '🌅', name: 'Manhã', subtitle: '', start: '00:00' },
+  { id: 'p-tarde', emoji: '☀️', name: 'Tarde', subtitle: '', start: '12:00' },
+  { id: 'p-noite', emoji: '🌙', name: 'Noite', subtitle: '', start: '18:00' },
+];
+
 function defaults() {
   return {
     version: 1,
@@ -43,6 +49,10 @@ function defaults() {
       dayStart: '06:00',
       dayEnd: '23:00',
     },
+    // Períodos do dia (seções da rotina)
+    periods: structuredClone(DEFAULT_PERIODS),
+    // Sono em ciclos de 90 min. anchor: qual horário é fixo ('wake' ou 'bed')
+    sleep: { enabled: false, anchor: 'wake', bed: '23:15', wake: '05:30', cycles: 4, latency: 15, days: [0, 1, 2, 3, 4, 5, 6] },
     plannerAnswers: null,
     onboarded: false,
   };
@@ -57,7 +67,7 @@ function load() {
     if (!raw) return defaults();
     const data = JSON.parse(raw);
     const base = defaults();
-    return { ...base, ...data, settings: { ...base.settings, ...(data.settings || {}) } };
+    return { ...base, ...data, settings: { ...base.settings, ...(data.settings || {}) }, sleep: { ...base.sleep, ...(data.sleep || {}) } };
   } catch {
     return defaults();
   }
@@ -75,7 +85,7 @@ export function subscribe(fn) { listeners.add(fn); return () => listeners.delete
 
 export function replaceState(next) {
   const base = defaults();
-  state = { ...base, ...next, settings: { ...base.settings, ...(next.settings || {}) } };
+  state = { ...base, ...next, settings: { ...base.settings, ...(next.settings || {}) }, sleep: { ...base.sleep, ...(next.sleep || {}) } };
   save();
 }
 export function resetState() { state = defaults(); save(); }
@@ -89,13 +99,17 @@ export function itemsForDate(iso) {
     .filter((r) => r.days.includes(dow) && !(r.skip || []).includes(iso))
     .map((r) => ({ ...r, kind: 'routine', date: iso, done: !!state.doneLog[`${r.id}|${iso}`] }));
   const tasks = state.tasks.filter((t) => t.date === iso).map((t) => ({ ...t, kind: 'task' }));
-  return [...routines, ...tasks].sort((a, b) => {
-    const am = toMin(a.start), bm = toMin(b.start);
-    if (am == null && bm == null) return 0;
-    if (am == null) return 1;
-    if (bm == null) return -1;
-    return am - bm;
-  });
+  return [...routines, ...tasks].sort(byTime);
+}
+
+/** Ordena por horário; no mesmo horário, marcos pontuais (sem fim, ex: Acordar) vêm antes. */
+export function byTime(a, b) {
+  const am = toMin(a.start), bm = toMin(b.start);
+  if (am == null && bm == null) return 0;
+  if (am == null) return 1;
+  if (bm == null) return -1;
+  if (am !== bm) return am - bm;
+  return (a.end ? 1 : 0) - (b.end ? 1 : 0);
 }
 
 export function toggleDone(item) {
@@ -116,6 +130,8 @@ export function weekStart(date, mondayFirst) {
   const diff = mondayFirst ? (dow + 6) % 7 : dow;
   return addDays(d, -diff);
 }
+
+export const fmtDur = (m) => (m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, '0') : ''}` : `${m} min`);
 
 export function durationMin(item) {
   const s = toMin(item.start), e = toMin(item.end);

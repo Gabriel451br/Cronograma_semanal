@@ -1,7 +1,7 @@
 // Service Worker: funcionamento offline e exibição/clique de notificações.
-const CACHE = 'cronograma-v1';
+const CACHE = 'cronograma-v2';
 const ASSETS = [
-  './', 'index.html', 'css/style.css', 'js/app.js', 'js/store.js', 'js/notifications.js', 'js/planner.js', 'js/ics.js',
+  './', 'index.html', 'css/style.css', 'js/app.js', 'js/store.js', 'js/notifications.js', 'js/planner.js', 'js/ics.js', 'js/sleep.js', 'js/routine-text.js',
   'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
 ];
 
