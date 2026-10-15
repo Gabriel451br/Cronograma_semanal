@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cronograma Semanal</title>
+  <meta name="description" content="Agenda semanal e diária minimalista com rotina fixa, tarefas, lembretes e planejador inteligente.">
+  <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#151515" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"></span>
+      <h1 id="view-title">Início</h1>
+    </div>
+    <button class="icon-btn" id="btn-notify-status" title="Notificações" aria-label="Notificações"></button>
+  </header>
+
+  <main id="view" class="view" tabindex="-1"></main>
+
+  <button class="fab" id="fab" aria-label="Adicionar">+</button>
+
+  <nav class="tabbar" aria-label="Navegação">
+    <button data-view="home" class="active"><span class="ti">◐</span><span>Início</span></button>
+    <button data-view="routine"><span class="ti">↻</span><span>Rotina</span></button>
+    <button data-view="agenda"><span class="ti">▦</span><span>Agenda</span></button>
+    <button data-view="settings"><span class="ti">⚙</span><span>Ajustes</span></button>
+  </nav>
+
+  <dialog id="modal" class="modal"></dialog>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
