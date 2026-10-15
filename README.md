@@ -28,7 +28,7 @@ python3 -m http.server 8000
 ## Deploy
 
 Cada push na branch `main` publica automaticamente no GitHub Pages (`.github/workflows/deploy.yml`).
-Se for o primeiro deploy e falhar, ative em **Settings → Pages → Source: GitHub Actions** e rode o workflow novamente.
+O workflow copia os arquivos do app para a branch `gh-pages`, que é servida pelo GitHub Pages (Settings → Pages → Source: *Deploy from a branch* → `gh-pages`).
 
 ## Estrutura
 
